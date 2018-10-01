@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS ES6 Documentation</title>
+		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<nav id="navbar">
+		<header id="nav-header"><h1>JS ES6<br> Documentation</h1></header>
+		<div id="nav-scroll">
+			<a class="nav-link" href="#Introduction">Introduction</a>
+			<a class="nav-link" href="#Explore_Differences_Between_the_var_and_let_Keywords">Explore Differences Between the var and let Keywords</a>
+			<a class="nav-link" href="#Declare_a_Read-Only_Variable_with_the_const_Keyword">Declare a Read-Only Variable with the const Keyword</a>
+			<a class="nav-link" href="#Prevent_Object_Mutation">Prevent Object Mutation</a>
+			<a class="nav-link" href="#Use_Arrow_Functions_to_Write_Concise_Anonymous_Functions">Use Arrow Functions to Write Concise Anonymous Functions</a>
+			<a class="nav-link" href="#Write_Arrow_Functions_with_Parameters">Write Arrow Functions with Parameters</a>
+			<a class="nav-link" href="#Write_Higher_Order_Arrow_Functions">Write Higher Order Arrow Functions</a>
+			<a class="nav-link" href="#Set_Default_Parameters_for_Your_Functions">Set Default Parameters for Your Functions</a>
+			<a class="nav-link" href="#Use_the_Rest_Operator_with_Function_Parameters">Use the Rest Operator with Function Parameters</a>
+			<a class="nav-link" href="#Use_the_Spread_Operator_to_Evaluate_Arrays_In-Place">Use the Spread Operator to Evaluate Arrays In-Place</a>
+			<a class="nav-link" href="#Use_Class_Syntax_to_Define_a_Constructor_Function">Use Class Syntax to Define a Constructor Function</a>
+			<a class="nav-link" href="#Use_getters_and_setters_to_Control_Access_to_an_Object">Use getters and setters to Control Access to an Object</a>
+			<a class="nav-link" href="#Reference">Reference</a>
+		</div>
+	</nav>
+	<main id="main-doc">
+		<section class="main-section" id="Introduction">
+		<header><h2>Introduction</h2></header>
+		<p>ECMAScript is a standardized version of JavaScript with the goal of unifying the language's specifications and features. As all major browsers and JavaScript-runtimes follow this specification, the term ECMAScript is interchangeable with the term JavaScript.
+		</p>
+		<p>JavaScript is an evolving programming language. As features are added and revisions are made, new versions of the language are released for use by developers.</p>
+		<p>The most recent standardized version is called ECMAScript 6 (ES6), released in 2015. This new version of the language adds some powerful features, including:
+			<ul>
+				<li>Arrow functions</li>
+				<li>Classes</li>
+				<li>Modules</li>
+				<li>let and const</li>
+				<li>Destructuring assignment</li>
+			</ul></p>
+		</section>
+		<section class="main-section" id="Explore_Differences_Between_the_var_and_let_Keywords">
+		<header><h2>Explore Differences Between the var and let Keywords</h2></header>
+		<p>One of the biggest problems with declaring variables with the var keyword is that you can overwrite variable declarations without an error.</p>
+		<div class="code-block"><code>
+			var camper = 'James';<br>
+			var camper = 'David';<br>
+			console.log(camper); // logs 'David'
+		</code></div>
+		<p>As you can see in the code above, the camper variable is originally declared as James and then overridden to be David.</p>
+		<p>In a small application, you might not run into this type of problem, but when your code becomes larger, you might accidentally overwrite a variable that you did not intend to overwrite.</p>
+		<p>Because this behaviour does not throw an error, searching and fixing bugs becomes more difficult.</p>
+		<p>A new keyword called let was introduced in ES6 to solve this potential issue with the var keyword.</p>
+		<p>If you were to replace var with let in the variable declarations of the code above, the result would be an error.</p>
+		<div class="code-block"><code>
+			let camper = 'James';<br>
+			let camper = 'David'; // throws an error
+		</code></div>
+		<p>This error can be seen in the console of your browser.</p>
+		<p>So unlike var, when using let, a variable with the same name can only be declared once. But both var and let can be reassigned.</p>
+		<p>Note the "use strict". This enables Strict Mode, which catches common coding mistakes and "unsafe" actions. For instance:</p>
+		<div class="code-block"><code>
+			"use strict";
+			x = 3.14; // throws an error because x is not declared<br>
+		</code></div>
+	</section>
+	<section class="main-section" id="Declare_a_Read-Only_Variable_with_the_const_Keyword">
+	<header><h2>Declare a Read-Only Variable with the const Keyword</h2></header>
+	<p>let is not the only new way to declare variables. In ES6, you can also declare variables using the const keyword.</p>
+	<p>const has all the awesome features that let has, with the added bonus that variables declared using const are read-only. They are a constant value, which means that once a variable is assigned with const, it cannot be reassigned.</p>
+	<div class="code-block"><code>
+		"use strict"<br>
+		const FAV_PET = "Cats";<br>
+		FAV_PET = "Dogs"; // returns error
+	</code></div>
+	<p>As you can see, trying to reassign a variable declared with const will throw an error. You should always name variables you don't want to reassign using the const keyword. This helps when you accidentally attempt to reassign a variable that is meant to stay constant.</p>
+	<p>A common practice when naming constants is to use all uppercase letters, with words separated by an underscore</p>
+	<h2>Mutate an Array Declared with const</h2>
+	<p>It is important to understand that objects (including arrays and functions) assigned to a variable using const are still mutable. Using the const declaration only prevents reassignment of the variable identifier.</p>
+	<div class="code-block"><code>
+		"use strict";<br>
+		const s = [5, 6, 7];<br>
+		s = [1, 2, 3]; // throws error, trying to assign a const<br>
+		s[2] = 45; // works just as it would with an array declared with var or let<br>
+		console.log(s); // returns [5, 6, 45]
+	</code></div>
+	<p>As you can see, you can mutate the object [5, 6, 7] itself and the variable s will still point to the altered array [5, 6, 45]. Like all arrays, the array elements in s are mutable, but because const was used, you cannot use the variable identifier s to point to a different array using the assignment operator.</p>
+	</section>
+	<section class="main-section" id="Prevent_Object_Mutation">
+	<header><h2>Prevent Object Mutation</h2></header>
+	<p>As seen in the previous challenge, const declaration alone doesn't really protect your data from mutation. To ensure your data doesn't change, JavaScript provides a function Object.freeze to prevent data mutation.</p>
+	<p>Once the object is frozen, you can no longer add, update, or delete properties from it. Any attempt at changing the object will be rejected without an error.</p>
+	<div class="code-block"><code>
+	let obj = {<br>
+	name:"FreeCodeCamp",<br>
+	review:"Awesome"<br>
+	};<br>
+	Object.freeze(obj);<br>
+	obj.review = "bad"; //will be ignored. Mutation not allowed<br>
+	obj.newProp = "Test"; // will be ignored. Mutation not allowed<br>
+	console.log(obj);<br>
+	// { name: "FreeCodeCamp", review:"Awesome"}</code></div>
+	</section>
+	<section class="main-section" id="Use_Arrow_Functions_to_Write_Concise_Anonymous_Functions">
+	<header><h2>Use Arrow Functions to Write Concise Anonymous Functions</h2></header>
+	<p>In JavaScript, we often don't need to name our functions, especially when passing a function as an argument to another function. Instead, we create inline functions. We don't need to name these functions because we do not reuse them anywhere else.</p>
+	<p>To achieve this, we often use the following syntax:</p>
+	<div class="code-block"><code>
+	const myFunc = function() {<br>
+	const myVar = "value";<br>
+	return myVar;<br>
+	}<br>
+	</code></div>
+	<p>ES6 provides us with the syntactic sugar to not have to write anonymous functions this way. Instead, you can use arrow function syntax:</p>
+	<div class="code-block"><code>
+	const myFunc = () => {<br>
+	const myVar = "value";<br>
+	return myVar;<br>
+	}<br>
+	</code></div>
+	<p>When there is no function body, and only a return value, arrow function syntax allows you to omit the keyword return as well as the brackets surrounding the code. This helps simplify smaller functions into one-line statements. Here is an example:</p>
+	<div class="code-block"><code>
+	const myFunc= () => "value"
+	</code></div>
+	<p>This code will still return value by default.</p>
+	</section>
+	<section class="main-section" id="Write_Arrow_Functions_with_Parameters">
+	<header><h2>Write Arrow Functions with Parameters</h2></header>
+	<p>Just like a normal function, you can pass arguments into arrow functions.</p>
+	<div class="code-block"><code>
+	// doubles input value and returns it<br>
+	const doubler = (item) => item * 2;
+	</code></div>
+	<p>You can pass more than one argument into arrow functions as well.</p>
+	</section>
+	<section class="main-section" id="Write_Higher_Order_Arrow_Functions">
+	<header><h2>Write Higher Order Arrow Functions</h2></header>
+	<p>Arrow functions work really well with higher order functions, such as map(), filter(), and reduce(), that take other functions as arguments for processing collections of data.</p>
+	<p>Read the following code:</p>
+	<div class="code-block"><code>
+	FBPosts.filter(function(post) {<br>
+	return post.thumbnail !== null && post.shares > 100 && post.likes > 500;<br>
+	})
+	</code></div>
+	<p>We have written this with filter() to at least make it somewhat readable. Now compare it to the following code which uses arrow function syntax instead:</p>
+	<div class="code-block"><code>
+	FBPosts.filter((post) => post.thumbnail !== null && post.shares > 100 && post.likes > 500)
+	</code></div>
+	<p>This code is more succinct and accomplishes the same task with fewer lines of code.</p>
+	</section>
+	<section class="main-section" id="Set_Default_Parameters_for_Your_Functions">
+	<header><h2>Set Default Parameters for Your Functions</h2></header>
+	<p>In order to help us create more flexible functions, ES6 introduces default parameters for functions.</p>
+	<p>Check out this code:</p>
+	<div class="code-block"><code>
+	function greeting(name = "Anonymous") {<br>
+	return "Hello " + name;<br>
+	}<br>
+	console.log(greeting("John")); // Hello John<br>
+	console.log(greeting()); // Hello Anonymous
+	</code></div>
+	<p>The default parameter kicks in when the argument is not specified (it is undefined). As you can see in the example above, the parameter name will receive its default value "Anonymous" when you do not provide a value for the parameter. You can add default values for as many parameters as you want.</p>
+	</section>
+	<section class="main-section" id="Use_the_Rest_Operator_with_Function_Parameters">
+	<header><h2>Use the Rest Operator with Function Parameters</h2></header>
+	<p>In order to help us create more flexible functions, ES6 introduces the rest operator for function parameters. With the rest operator, you can create functions that take a variable number of arguments. These arguments are stored in an array that can be accessed later from inside the function.</p>
+	<p>Check out this code:</p>
+	<div class="code-block"><code>
+	function howMany(...args) {<br>
+	return "You have passed " + args.length + " arguments.";<br>
+	}<br>
+	console.log(howMany(0, 1, 2)); // You have passed 3 arguments<br>
+	console.log(howMany("string", null, [1, 2, 3], { })); // You have passed 4 arguments.<br>
+	</code></div>
+	<p>The rest operator eliminates the need to check the args array and allows us to apply map(), filter() and reduce() on the parameters array.</p>
+	</section>
+	<section class="main-section" id="Use_the_Spread_Operator_to_Evaluate_Arrays_In-Place">
+	<header><h2>Use the Spread Operator to Evaluate Arrays In-Place</h2></header>
+	<p>ES6 introduces the spread operator, which allows us to expand arrays and other expressions in places where multiple parameters or elements are expected.</p>
+	<p>The ES5 code below uses apply() to compute the maximum value in an array:</p>
+	<div class="code-block"><code>
+	var arr = [6, 89, 3, 45];<br>
+	var maximus = Math.max.apply(null, arr); // returns 89
+	</code></div>
+	<p>We had to use Math.max.apply(null, arr) because Math.max(arr) returns NaN. Math.max() expects comma-separated arguments, but not an array.</p>
+	<p>The spread operator makes this syntax much better to read and maintain.</p>
+	<div class="code-block"><code>
+	const arr = [6, 89, 3, 45];<br>
+	const maximus = Math.max(...arr); // returns 89
+	</code></div>
+	<p>...arr returns an unpacked array. In other words, it spreads the array (creates comma separated arguments).</p>
+	<p>However, the spread operator only works in-place, like in an argument to a function or in an array literal. The following code will not work:</p>
+	<div class="code-block"><code>
+	const spreaded = ...arr; // will throw a syntax error
+	</code></div>
+	</section>
+	<section class="main-section" id="Use_Class_Syntax_to_Define_a_Constructor_Function">
+	<header><h2>Use class Syntax to Define a Constructor Function</h2></header>
+	<p>ES6 provides a new syntax to help create objects, using the keyword class.</p>
+	<p>This is to be noted, that the class syntax is just a syntax, and not a full-fledged class based implementation of object oriented paradigm, unlike in languages like Java, or Python, or Ruby etc.</p>
+	<p>In ES5, we usually define a constructor function, and use the new keyword to instantiate an object.</p>
+	<div class="code-block"><code>
+	var SpaceShuttle = function(targetPlanet){<br>
+	this.targetPlanet = targetPlanet;<br>
+	}<br>
+	var zeus = new SpaceShuttle('Jupiter');
+	</code></div>
+	<p>The class syntax simply replaces the constructor function creation:</p>
+	<div class="code-block"><code>
+	class SpaceShuttle {<br>
+	constructor(targetPlanet){<br>
+	this.targetPlanet = targetPlanet;<br>
+	}<br>
+	}<br>
+	const zeus = new SpaceShuttle('Jupiter');<br>
+	</code></div>
+	<p>Notice that the class keyword declares a new function, and a constructor was added, which would be invoked when new is called - to create a new object.</p>
+	</section>
+	<section class="main-section" id="Use_getters_and_setters_to_Control_Access_to_an_Object">
+	<header><h2>Use getters and setters to Control Access to an Object</h2></header>
+	<p>You can obtain values from an object, and set a value of a property within an object.</p>
+	<p>These are classically called getters and setters.</p>
+	<p>Getter functions are meant to simply return (get) the value of an object's private variable to the user without the user directly accessing the private variable.</p>
+	<p>Setter functions are meant to modify (set) the value of an object's private variable based on the value passed into the setter function. This change could involve calculations, or even overwriting the previous value completely.</p>
+	<div class="code-block"><code>
+	class Book {<br>
+	constructor(author) {<br>
+	this._author = author;<br>
+	}<br>
+	// getter<br>
+	get writer(){<br>
+	return this._author;<br>
+	}<br>
+	// setter<br>
+	set writer(updatedAuthor){<br>
+	this._author = updatedAuthor;<br>
+	}<br>
+	}<br>
+	const lol = new Book('anonymous');<br>
+	console.log(lol.writer); // anonymous<br>
+	lol.writer = 'wut';<br>
+	console.log(lol.writer); // wut<br>
+	</code></div>
+	<p>Notice the syntax we are using to invoke the getter and setter - as if they are not even functions.</p>
+	<p>Getters and setters are important, because they hide internal implementation details.</p>
+	</section>
+	<section class="main-section" id="Reference">
+	<header><h2>Reference</h2></header>
+	<ul>
+	<li>All the documentation in this page is taken from <a href="https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/es6/">FreeCodeCamp</a>.</li>
+	</ul>
+	</section>
+</main>
+</body>
+</html>
